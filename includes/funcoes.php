@@ -29,35 +29,35 @@ function gerarDeclaracaoPDF($dados) {
     
     $pdf = new FPDF();
     $pdf->AddPage();
-    $pdf->SetFont('Arial', 'B', 16);
+    $pdf->SetFont('helvetica', 'B', 16);
     
     // Cabeçalho
-    $pdf->Cell(0, 10, utf8_decode('DECLARAÇÃO DE PARTICIPAÇÃO EM REUNIÕES'), 0, 1, 'C');
+    $pdf->Cell(0, 10, ('DECLARAÇÃO DE PARTICIPAÇÃO EM REUNIÕES'), 0, 1, 'C');
     $pdf->Ln(10);
     
     // Corpo do texto
-    $pdf->SetFont('Arial', '', 12);
-    $texto = utf8_decode("Declaramos para os devidos fins que {$dados['servidor_nome']}, matrícula {$dados['servidor_matricula']}, cargo {$dados['servidor_cargo']}, participou das seguintes reuniões no período de {$dados['data_inicio']} a {$dados['data_fim']}:");
+    $pdf->SetFont('helvetica', '', 12);
+    $texto = ("Declaramos para os devidos fins que {$dados['servidor_nome']}, matrícula {$dados['servidor_matricula']}, cargo {$dados['servidor_cargo']}, participou das seguintes reuniões no período de {$dados['data_inicio']} a {$dados['data_fim']}:");
     $pdf->MultiCell(0, 10, $texto);
     $pdf->Ln(10);
     
     // Lista de reuniões
-    $pdf->SetFont('Arial', 'B', 12);
-    $pdf->Cell(0, 10, utf8_decode('Reuniões Participadas:'), 0, 1);
-    $pdf->SetFont('Arial', '', 12);
+    $pdf->SetFont('helvetica', 'B', 12);
+    $pdf->Cell(0, 10, ('Reuniões Participadas:'), 0, 1);
+    $pdf->SetFont('helvetica', '', 12);
     
     foreach ($dados['reunioes'] as $reuniao) {
-        $pdf->Cell(0, 10, utf8_decode("- {$reuniao['titulo']} em " . formatarData($reuniao['data_reuniao'])), 0, 1);
+        $pdf->Cell(0, 10, ("- {$reuniao['titulo']} em " . formatarData($reuniao['data_reuniao'])), 0, 1);
     }
     
     // Rodapé
     $pdf->Ln(15);
-    $pdf->Cell(0, 10, utf8_decode("São Vicente do Sul, " . date('d/m/Y')), 0, 1, 'R');
+    $pdf->Cell(0, 10, ("São Vicente do Sul, " . date('d/m/Y')), 0, 1, 'R');
     $pdf->Ln(20);
     $pdf->Cell(0, 10, "___________________________________________", 0, 1, 'R');
-    $pdf->Cell(0, 10, utf8_decode("Assinatura do Responsável"), 0, 1, 'R');
+    $pdf->Cell(0, 10, ("Assinatura do Responsável"), 0, 1, 'R');
     
-    return $pdf->Output('S', 'declaracao.pdf');
+    return $pdf->Output('../', $dados['servidor_nome'].'_declaracao.pdf');
 }
 
 // Função auxiliar para verificar se o servidor está acessível
