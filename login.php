@@ -2,7 +2,7 @@
 require_once 'includes/config.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['entrar'])) {
+    if (isset($_POST["entrar"])) {
         $matricula = $_POST['matricula'] ?? '';
         $senha = $_POST['senha'] ?? '';
 
@@ -18,14 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if (!$usuario['ativo']) {
                 $erro = "Conta desativada!";
-            } elseif ($senha === $usuario['senha']) { // Comparação direta (apenas para desenvolvimento)
+            } elseif ($senha === $usuario['senha']) {
                 $_SESSION['usuario_id'] = $usuario['id'];
                 $_SESSION['usuario_nome'] = $usuario['nome'];
                 $_SESSION['usuario_matricula'] = $usuario['matricula_siape'];
                 $_SESSION['usuario_cargo'] = $usuario['cargo'];
                 $_SESSION['is_admin'] = $usuario['is_admin'];
 
-                // Registrar log
                 $conn->query("INSERT INTO logs (usuario_id, acao, modulo) 
                          VALUES ({$usuario['id']}, 'login', 'sistema')");
 
@@ -37,9 +36,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $erro = "Matrícula não encontrada!";
         }
     }
-    if (isset($_POST['cadastrar'])) {
+    if (isset($_POST["cadastrar"])) {
         redirect('admin/cadastrar_usuario.php');
-
     }
 }
 

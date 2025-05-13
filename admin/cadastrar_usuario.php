@@ -1,13 +1,5 @@
 <?php
 include '../includes/config.php';
-include '../includes/auth.php';
-
-verificaLogin();
-
-if (!isAdmin()) {
-    $_SESSION['erro'] = "Acesso negado!";
-    redirect('login.php');
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $matricula = trim($_POST['matricula']);

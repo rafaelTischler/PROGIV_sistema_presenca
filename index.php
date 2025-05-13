@@ -14,7 +14,6 @@ require_once 'includes/header.php';
         <ul>
             <li><a href="admin/reunioes/listar.php">Gerenciar Reuniões</a></li>
             <li><a href="admin/declaracoes/emitir.php">Emitir Declarações</a></li>
-            <li><a href="admin/relatorios/presencas.php">Relatórios de Presença</a></li>
         </ul>
     </div>
 <?php else: ?>
