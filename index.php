@@ -21,8 +21,8 @@ require_once 'includes/header.php';
     <div class="alert alert-info">
         <h3>Área do Servidor</h3>
         <ul>
-            <li><a href="servidor/presenca/registrar.php">Registrar Presença</a></li>
-            <li><a href="servidor/minhas-presencas/index.php">Minhas Presenças</a></li>
+            <li><a href="registrar_presenca.php">Registrar Presença</a></li>
+            <li><a href="servidor/minhas-presencas/listar.php">Minhas Presenças</a></li>
 
         </ul>
     </div>

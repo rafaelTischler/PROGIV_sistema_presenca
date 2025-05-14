@@ -30,7 +30,9 @@ $total_presencas = $conn->query("
 ")->fetch_assoc()['total'];
 
 // URL completa para registro de presença
-$url_presenca = BASE_URL . 'registrar_presenca.php?id=' . $reuniao_id;
+// URL correta para registro de presença
+$url_presenca = BASE_URL . 'servidor/presenca/registrar.php?id=' . $reuniao_id;
+
 
 require_once '../../includes/header.php';
 ?>
@@ -48,10 +50,10 @@ require_once '../../includes/header.php';
         <p><?= nl2br($reuniao['descricao']) ?></p>
 
         <a href="editar.php?id=<?= $reuniao['id'] ?>" class="btn">Editar</a>
-        
-            <form action="../reunioes/listar.php" method="get">
-                <button type="submit" class="btn btn-secondary mb-3">Voltar</button>
-            </form>
+
+        <form action="../reunioes/listar.php" method="get">
+            <button type="submit" class="btn btn-secondary mb-3">Voltar</button>
+        </form>
     </div>
 
 
