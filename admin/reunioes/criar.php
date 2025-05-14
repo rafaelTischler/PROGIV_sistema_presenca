@@ -16,29 +16,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->execute()) {
         $reuniao_id = $stmt->insert_id; // Esta linha deve vir ANTES de usar $reuniao_id
 
-        // 1. Definir o caminho completo do arquivo QR Code
+        
         $qrcode_filename = 'qrcode_' . $reuniao_id . '.png';
         $qrcode_file_path = QRCODE_DIR . $qrcode_filename;
 
-        // 2. Criar a URL completa para registro de presença
-        $url_presenca = BASE_URL . 'registrar_presenca.php?id=' . $reuniao_id;
+        
+        $url_presenca = BASE_URL . 'servidor/presenca/registrar.php?id=' . $reuniao_id;
 
-        // 3. Verificar/Criar o diretório se não existir
+
+        
         if (!file_exists(QRCODE_DIR)) {
             mkdir(QRCODE_DIR, 0777, true);
         }
 
-        // 4. Gerar o QR Code com tratamento de erros
+        
         try {
             QRcode::png(
                 $url_presenca,
                 $qrcode_file_path,
-                QR_ECLEVEL_L,  // Nível de correção de erro
-                10,            // Tamanho de cada módulo QR
-                2              // Margem em módulos
+                QR_ECLEVEL_L,  
+                10,            
+                2              
             );
 
-            // 5. Atualizar a reunião com o nome do arquivo QR Code
+
             $update_stmt = $conn->prepare("UPDATE reunioes SET qrcode_file = ? WHERE id = ?");
             $update_stmt->bind_param("si", $qrcode_filename, $reuniao_id);
             $update_stmt->execute();

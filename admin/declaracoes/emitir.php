@@ -3,6 +3,7 @@ require_once '../../includes/config.php';
 require_once '../../includes/auth.php';
 require_once '../../includes/funcoes.php';
 verificaLogin();
+
 if (!isAdmin()) redirect('../servidor/presenca/registrar.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -10,25 +11,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data_inicio = $_POST['data_inicio'] ?? '';
     $data_fim = $_POST['data_fim'] ?? '';
 
-    // Busca dados do servidor
     $stmt = $conn->prepare("SELECT nome, matricula_siape, cargo FROM usuarios WHERE id = ?");
     $stmt->bind_param("i", $usuario_id);
     $stmt->execute();
     $servidor = $stmt->get_result()->fetch_assoc();
-
-    // Busca reuniões no período
     $stmt = $conn->prepare("SELECT r.titulo, r.data_reuniao 
                            FROM reunioes r
                            JOIN presencas p ON r.id = p.reuniao_id
                            WHERE p.usuario_id = ? 
-                           AND r.data_reuniao BETWEEN ? AND ?
+                           AND r.data_reuniao BETWEEN ? AND ? 
                            ORDER BY r.data_reuniao");
     $stmt->bind_param("iss", $usuario_id, $data_inicio, $data_fim);
     $stmt->execute();
     $reunioes = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
     if (count($reunioes) > 0) {
-        // Prepara dados para o PDF
         $dados = [
             'servidor_nome' => $servidor['nome'],
             'servidor_matricula' => $servidor['matricula_siape'],
@@ -37,10 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'data_fim' => formatarData($data_fim, 'd/m/Y'),
             'reunioes' => $reunioes
         ];
-
-        // Registra a declaração no banco
-        $stmt = $conn->prepare("INSERT INTO declaracoes (usuario_id, emitido_por, conteudo, data_inicio, data_fim) 
-                               VALUES (?, ?, ?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO declaracoes (usuario_id, emitido_por, conteudo, data_inicio, data_fim) VALUES (?, ?, ?, ?, ?)");
         $conteudo = "Declaração de participação em " . count($reunioes) . " reuniões";
         $stmt->bind_param("iisss", $usuario_id, $_SESSION['usuario_id'], $conteudo, $data_inicio, $data_fim);
         $stmt->execute();
@@ -51,26 +45,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'data_fim' => $data_fim
         ]);
 
-        // Gera e exibe o PDF
-        gerarDeclaracaoPDF($dados);
+        echo gerarDeclaracaoHTML($dados);
         exit();
     } else {
         $_SESSION['erro'] = "Nenhuma reunião encontrada no período selecionado.";
     }
 }
 
-// Lista de servidores para o select
 $servidores = $conn->query("SELECT id, nome, matricula_siape FROM usuarios ORDER BY nome");
 
 require_once '../../includes/header.php';
 ?>
 
 <h2>Emitir Declaração de Participação</h2>
-
-<?php if (isset($_SESSION['erro'])): ?>
-    <div class="alert alert-danger"><?= $_SESSION['erro'];
-                                    unset($_SESSION['erro']); ?></div>
-<?php endif; ?>
 
 <form method="POST">
     <div class="form-group">

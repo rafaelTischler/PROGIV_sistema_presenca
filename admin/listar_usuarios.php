@@ -1,6 +1,6 @@
 <?php
-require_once '../../includes/config.php';
-require_once '../../includes/auth.php';
+require_once '../includes/config.php';
+require_once '../includes/auth.php';
 verificaLogin();
 if (!isAdmin()) {
     $_SESSION['erro'] = "Acesso negado!";
@@ -9,7 +9,7 @@ if (!isAdmin()) {
 
 $usuarios = $conn->query("SELECT * FROM usuarios ORDER BY nome");
 
-require_once '../../includes/header.php';
+require_once '../includes/header.php';
 ?>
 
 <h2>Lista de Usuários</h2>
@@ -45,4 +45,4 @@ require_once '../../includes/header.php';
     </tbody>
 </table>
 
-<?php require_once '../../includes/footer.php'; ?>
+<?php require_once '../includes/footer.php'; ?>

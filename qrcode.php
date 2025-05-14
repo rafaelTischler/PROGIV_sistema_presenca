@@ -4,8 +4,6 @@ require_once 'includes/auth.php';
 
 if (isset($_POST['codigo'])) {
     $codigo = trim($_POST['codigo']);
-
-    // Verifica se é um token válido
     $stmt = $conn->prepare("SELECT id FROM reunioes WHERE qrcode_token = ?");
     $stmt->bind_param("s", $codigo);
     $stmt->execute();
