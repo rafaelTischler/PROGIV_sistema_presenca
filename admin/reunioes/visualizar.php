@@ -22,15 +22,12 @@ if (!$reuniao) {
     redirect('listar.php');
 }
 
-// Contar presenças
 $total_presencas = $conn->query("
     SELECT COUNT(*) as total 
     FROM presencas 
     WHERE reuniao_id = $reuniao_id
 ")->fetch_assoc()['total'];
 
-// URL completa para registro de presença
-// URL correta para registro de presença
 $url_presenca = BASE_URL . 'servidor/presenca/registrar.php?id=' . $reuniao_id;
 
 

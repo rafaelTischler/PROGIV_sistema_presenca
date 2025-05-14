@@ -3,19 +3,17 @@ require_once 'includes/config.php';
 require_once 'includes/auth.php';
 require_once 'includes/funcoes.php';
 
-verificaLogin();  // Verifica se o usuário está logado
+verificaLogin(); 
 
-// Verifica se o usuário é admin
 if (!isAdmin()) {
-    redirect('index.php'); // Se não for admin, redireciona
+    redirect('index.php'); 
 }
 
-// Consulta para buscar os logs
 $stmt = $conn->prepare("SELECT id, usuario_id, acao, modulo, data_log FROM logs ORDER BY data_log DESC");
 $stmt->execute();
 $logs = $stmt->get_result();
 
-require_once 'includes/header.php';  // Inclui o cabeçalho
+require_once 'includes/header.php';  
 ?>
 
 <h2>Logs de Ações</h2>
@@ -52,5 +50,5 @@ require_once 'includes/header.php';  // Inclui o cabeçalho
     <p>Não há logs registrados.</p>
 <?php endif; ?>
 
-<?php require_once 'includes/footer.php'; // Inclui o rodapé 
+<?php require_once 'includes/footer.php'; 
 ?>

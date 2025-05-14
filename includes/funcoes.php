@@ -9,18 +9,17 @@ function formatarData($data, $formato = 'd/m/Y H:i')
 
 function gerarQRCode($token, $reuniao_id)
 {
-    // Gera a URL completa com o IP do notebook
+
     $url_presenca = BASE_URL . 'registrar_presenca.php?id=' . $reuniao_id . '&token=' . $token;
 
     $filename = QRCODE_DIR . 'qrcode_' . $reuniao_id . '.png';
 
-    // Gera o QR Code com a URL completa
     QRcode::png(
         $url_presenca,
         $filename,
-        QR_ECLEVEL_L,  // Nível de correção de erro
-        10,            // Tamanho (10px por módulo)
-        0              // Margem
+        QR_ECLEVEL_L,  
+        10,        
+        0     
     );
 
     return basename($filename);
@@ -28,7 +27,7 @@ function gerarQRCode($token, $reuniao_id)
 
 function gerarDeclaracaoHTML($dados)
 {
-    ob_start(); // Inicia o buffer de saída
+    ob_start(); 
 ?>
     <div style="max-width: 800px; margin: 0 auto; font-family: Arial, sans-serif;">
         <h2 style="text-align: center;">DECLARAÇÃO DE PARTICIPAÇÃO EM REUNIÕES</h2>
@@ -64,11 +63,10 @@ function gerarDeclaracaoHTML($dados)
     </form>
 
 <?php
-    return ob_get_clean(); // Retorna o conteúdo do buffer como string HTML
+    return ob_get_clean(); 
 
 }
 
-// Função auxiliar para verificar se o servidor está acessível
 function verificarAcessibilidade()
 {
     $url = BASE_URL . 'check.php';

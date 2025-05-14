@@ -7,15 +7,13 @@ $mensagem_erro = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $reuniao_id = intval($_POST['id']);
-
-    // Verifica se a reunião existe
     $stmt = $conn->prepare("SELECT id FROM reunioes WHERE id = ?");
     $stmt->bind_param("i", $reuniao_id);
     $stmt->execute();
     $resultado = $stmt->get_result();
 
     if ($resultado->num_rows === 1) {
-        // Redireciona para o registrar.php
+     
         header("Location: servidor/presenca/registrar.php?id=" . $reuniao_id);
         exit;
     } else {

@@ -3,7 +3,6 @@ require_once '../../includes/config.php';
 require_once '../../includes/auth.php';
 verificaLogin();
 
-/** Função para validar se a reunião existe */
 function buscarReuniao($conn, $reuniao_id) {
     $stmt = $conn->prepare("SELECT id, titulo FROM reunioes WHERE id = ?");
     $stmt->bind_param("i", $reuniao_id);
@@ -12,7 +11,6 @@ function buscarReuniao($conn, $reuniao_id) {
     return $result->fetch_assoc();
 }
 
-/** Função para registrar presença, retorna status */
 function processarPresenca($conn, $usuario_id, $reuniao_id) {
     $stmt = $conn->prepare("SELECT id FROM presencas WHERE usuario_id = ? AND reuniao_id = ?");
     $stmt->bind_param("ii", $usuario_id, $reuniao_id);
@@ -26,7 +24,7 @@ function processarPresenca($conn, $usuario_id, $reuniao_id) {
     return $stmt->execute() ? 'registrado' : 'erro';
 }
 
-// Verificação do parâmetro
+
 if (!isset($_GET['id'])) {
     $_SESSION['erro'] = "Reunião não especificada.";
     header('Location: ../../index.php');
@@ -36,7 +34,6 @@ if (!isset($_GET['id'])) {
 $reuniao_id = intval($_GET['id']);
 $usuario_id = $_SESSION['usuario_id'];
 
-// Busca reunião
 $reuniao = buscarReuniao($conn, $reuniao_id);
 if (!$reuniao) {
     $_SESSION['erro'] = "Reunião não encontrada.";
@@ -44,7 +41,6 @@ if (!$reuniao) {
     exit;
 }
 
-// Processa presença
 $status = processarPresenca($conn, $usuario_id, $reuniao_id);
 
 require_once '../../includes/header.php';

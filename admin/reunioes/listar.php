@@ -11,11 +11,8 @@ $reunioes = $conn->query("
     ORDER BY r.data_reuniao DESC
 ");
 
-// Verifica se há requisição de exclusão
 if (isset($_GET['excluir'])) {
     $id = intval($_GET['excluir']);
-
-    // Exclui a reunião do banco
     $stmt = $conn->prepare("DELETE FROM reunioes WHERE id = ?");
     $stmt->bind_param("i", $id);
 
@@ -25,7 +22,7 @@ if (isset($_GET['excluir'])) {
         $_SESSION['erro'] = "Erro ao excluir reunião: " . $conn->error;
     }
 
-    // Redireciona para evitar reenvio do GET
+
     header("Location: listar.php");
     exit;
 }

@@ -9,11 +9,9 @@ if (!isAdmin()) {
     redirect('../../login.php');
 }
 
-// Exclusão de usuário
 if (isset($_GET['excluir'])) {
     $id = intval($_GET['excluir']);
 
-    // Impede excluir a si mesmo
     if ($id == $_SESSION['usuario_id']) {
         $_SESSION['erro'] = "Você não pode excluir sua própria conta.";
     } else {

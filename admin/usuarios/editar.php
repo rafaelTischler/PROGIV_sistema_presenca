@@ -11,8 +11,6 @@ if (!isset($_GET['id'])) {
 }
 
 $id = intval($_GET['id']);
-
-// Buscar dados atuais do usuário
 $stmt = $conn->prepare("SELECT * FROM usuarios WHERE id = ?");
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -23,10 +21,8 @@ if ($result->num_rows === 0) {
     header("Location: listar.php");
     exit;
 }
-
 $usuario = $result->fetch_assoc();
 
-// Se enviou o formulário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $matricula = trim($_POST['matricula']);
     $nome = trim($_POST['nome']);
