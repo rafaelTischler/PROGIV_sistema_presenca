@@ -98,4 +98,9 @@ require_once '../../includes/header.php';
     <button type="submit" class="btn btn-primary">Emitir Declaração</button>
 </form>
 
+<form action="../../index.php" method="get">
+    <button type="submit" class="btn btn-secondary mb-3">Voltar</button>
+</form>
+
+
 <?php require_once '../../includes/footer.php'; ?>

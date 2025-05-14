@@ -48,7 +48,12 @@ require_once '../../includes/header.php';
         <p><?= nl2br($reuniao['descricao']) ?></p>
 
         <a href="editar.php?id=<?= $reuniao['id'] ?>" class="btn">Editar</a>
+        
+            <form action="../reunioes/listar.php" method="get">
+                <button type="submit" class="btn btn-secondary mb-3">Voltar</button>
+            </form>
     </div>
+
 
     <div style="text-align: center;">
         <h3>QR Code para Presença</h3>
@@ -59,9 +64,9 @@ require_once '../../includes/header.php';
                 <p>QR Code não gerado</p>
             </div>
         <?php endif; ?>
-        
+
         <p>ID da Reunião: <strong><?= $reuniao['id'] ?></strong></p>
-        <p>Link direto: 
+        <p>Link direto:
             <small>
                 <a href="<?= $url_presenca ?>" target="_blank">
                     <?= $url_presenca ?>
@@ -73,5 +78,7 @@ require_once '../../includes/header.php';
         </p>
     </div>
 </div>
+
+
 
 <?php require_once '../../includes/footer.php'; ?>

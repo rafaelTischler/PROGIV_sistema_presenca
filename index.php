@@ -14,6 +14,7 @@ require_once 'includes/header.php';
         <ul>
             <li><a href="admin/reunioes/listar.php">Gerenciar Reuniões</a></li>
             <li><a href="admin/declaracoes/emitir.php">Emitir Declarações</a></li>
+            <li><a href="admin/usuarios/listar.php">Gerenciar usuários</a></li>
         </ul>
     </div>
 <?php else: ?>
@@ -22,6 +23,7 @@ require_once 'includes/header.php';
         <ul>
             <li><a href="servidor/presenca/registrar.php">Registrar Presença</a></li>
             <li><a href="servidor/minhas-presencas/index.php">Minhas Presenças</a></li>
+
         </ul>
     </div>
 <?php endif; ?>
